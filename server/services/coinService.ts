@@ -10,6 +10,14 @@ const searchCoin = async (query: string) => {
     }
 }
 
+const getCoinInfo = async (coinID: string) => {
+    try {
+        let response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinID}`);
 
+        return response.data;
+    } catch (error) {
+        console.log(String(error));
+    }
+}
 
-export { searchCoin }
+export { searchCoin, getCoinInfo }

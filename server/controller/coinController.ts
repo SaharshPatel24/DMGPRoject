@@ -1,5 +1,4 @@
 import express from "express";
-import axios from "axios";
 
 import * as coinService from "../services/coinService";
 
@@ -25,14 +24,13 @@ const getCoinInfo = async (req: express.Request, res: express.Response) => {
         return res.status(400).send("Missing Query string");
     }
 
-    try {
-        let response = await axios.get(`https://api.coingecko.com/api/v3/coins/${query}`);
+    const coinInfo = await coinService.getCoinInfo(query as string);
 
-        return res.status(200).json(response.data);
-    } catch (error) {
-        res.status(500).json(error);
-        throw new Error(String(error));
+    if (!coinInfo) {
+        return res.status(500).json("No Coin Found with respective ID");
     }
+
+    return res.status(200).json(coinInfo);
 }
 
 export {
