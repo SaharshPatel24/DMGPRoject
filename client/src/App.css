@@ -13,9 +13,12 @@
   pointer-events: none;
 }
 
-.grid-box {
-  display: flex;
-  flex-direction: column;
+.list-group {
+  overflow-x: 'scroll',
+}
+
+.list-group::-webkit-scrollbar {
+  width: 0;
 }
 
 .form-search {

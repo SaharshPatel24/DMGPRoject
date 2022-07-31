@@ -60,6 +60,7 @@ function App() {
         <button type="submit">Search</button>
       </form>
       <List
+        className="list-group"
         sx={{
           marginTop: "-13.5%",
           width: '100%',
