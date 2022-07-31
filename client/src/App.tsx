@@ -4,14 +4,26 @@ import './App.css';
 
 function App() {
   const [coinsList, setCoinsList] = useState([]);
+  const [error, setError] = useState([]);
   const [Query, setQuery] = useState('');
 
   useEffect(() => {
     const fetchCoinsList = async () => {
-      let response = await fetch(`http://localhost:5000/search?query=${Query}`);
-      let coins = await response.json();
-      console.log(coins);
-      setCoinsList(coins);
+      try {
+        let response = await fetch(`http://localhost:5000/search?query=${Query}`);
+        let coins = await response.json();
+        if (response.status === 200) {
+          setCoinsList(coins);
+        }
+        else {
+          setError(coins);
+        }
+
+      } catch (error) {
+        setCoinsList([]);
+        throw Error(String(error));
+      }
+
     }
     fetchCoinsList();
   }, [Query])
@@ -24,28 +36,34 @@ function App() {
       </form>
       <List
         sx={{
-          marginTop: "-5%",
+          marginTop: "-13.5%",
           width: '100%',
-          maxWidth: 700,
+          maxWidth: 750,
           bgcolor: 'background.paper',
           position: 'fixed',
           overflow: 'auto',
-          maxHeight: 150,
-          '& ul': { padding: 0 },
+          maxHeight: 254,
         }}>
         {
-          coinsList.map((data: any, key: number) => {
-            return <ListItem key={key}><ListItemAvatar>
-              <Avatar>
-                <img src={data.thumb} alt={data.id} width="30" height="30" />
-              </Avatar>
+          (coinsList !== undefined && coinsList.length !== 0)
+            ?
+            coinsList.map((data: any, key: number) => {
+              return <ListItem key={key}><ListItemAvatar>
+                <Avatar>
+                  <img src={data.thumb} alt={data.id} width="30" height="30" />
+                </Avatar>
+              </ListItemAvatar><ListItemText
+                  primary={data.name} />
+              </ListItem>
+            })
+            :
+            < ListItem ><ListItemAvatar>
             </ListItemAvatar><ListItemText
-                primary={data.name} />
+                primary={error} />
             </ListItem>
-          })
         }
       </List>
-    </div>
+    </div >
 
 
   );
