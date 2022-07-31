@@ -9,9 +9,9 @@ function App() {
   const [error, setError] = useState([]);
   const [Query, setQuery] = useState('');
   const [coinDetails, setCoinDetails] = useState({
-    name: undefined,
-    price: undefined,
-    imageUrl: undefined,
+    name: "Crypto Name",
+    price: "Crypto Price",
+    imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7l1Tzonk76xtsQwjua2FZFPvRcjkiMaQF7g7-iBKJ1h7i4VrbWeGYX2KyniwvUrmmhC4&usqp=CAU",
   });
 
   const handleOnClick = async (e: any, coinId: String) => {
@@ -56,7 +56,7 @@ function App() {
   return (
     <div className="App">
       <form className="form-search" method="get" action="#">
-        <input type="search" name="search" onChange={event => setQuery(event.target.value)} placeholder="search your crypto here ...." />
+        <input type="search" name="search" autoComplete='off' onChange={event => setQuery(event.target.value)} placeholder="search your crypto here ...." />
         <button type="submit">Search</button>
       </form>
       <List
@@ -73,12 +73,29 @@ function App() {
         {
           (coinsList !== undefined && coinsList.length !== 0)
             ?
-            coinsList.map((data: any, key: number) => {
-              return <ListItem key={key} onClick={(e) => handleOnClick(e, data.id)}><ListItemAvatar>
-                <Avatar>
-                  <img src={data.thumb} alt={data.id} width="30" height="30" />
-                </Avatar>
-              </ListItemAvatar><ListItemText
+            coinsList.filter((data: any) => {
+              if (Query === '') {
+                return [];
+              } else if (data.name.toLowerCase().includes(Query.toLowerCase())) {
+                return data;
+              }
+              else {
+                return [];
+              }
+            }).map((data: any, key: number) => {
+              return <ListItem key={key} sx={{
+                '&:hover': {
+                  cursor: 'pointer',
+                  background: "#ddd",
+                }
+              }}
+                onClick={(e) => handleOnClick(e, data.id)
+                }>
+                <ListItemAvatar>
+                  <Avatar>
+                    <img src={data.thumb} alt={data.id} width="30" height="30" />
+                  </Avatar>
+                </ListItemAvatar><ListItemText
                   primary={data.name} />
               </ListItem>
             })
