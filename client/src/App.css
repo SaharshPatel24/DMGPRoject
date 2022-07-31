@@ -13,6 +13,11 @@
   pointer-events: none;
 }
 
+.grid-box {
+  display: flex;
+  flex-direction: column;
+}
+
 .form-search {
   margin: 0 auto;
   margin-top: -35%;
