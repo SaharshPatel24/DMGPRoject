@@ -4,3 +4,4 @@ export enum HttpRequestStatusCode {
     NotFound = 404,
     InternalServerError = 500,
 }
+
