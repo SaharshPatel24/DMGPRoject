@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 
 import { Avatar, Card, CardActionArea, CardContent, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
+import { HttpRequestStatusCode, coinDetails } from "./interface/interface";
 
 function App() {
   const [coinsList, setCoinsList] = useState([]);
-  const [error, setError] = useState([]);
+  const [error, setError] = useState<string>("");
   const [Query, setQuery] = useState('');
-  const [coinDetails, setCoinDetails] = useState({
+  const [coinDetails, setCoinDetails] = useState<coinDetails>({
     name: "Crypto Name",
     price: "Crypto Price",
     imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7l1Tzonk76xtsQwjua2FZFPvRcjkiMaQF7g7-iBKJ1h7i4VrbWeGYX2KyniwvUrmmhC4&usqp=CAU",
@@ -19,7 +20,7 @@ function App() {
     try {
       let response = await fetch(`http://localhost:5000/coin-info?query=${coinId}`);
       let coins = await response.json();
-      if (response.status === 200) {
+      if (response.status === HttpRequestStatusCode.OK) {
         const coinDetail = {
           name: coins.name,
           price: coins.market_data.current_price.cad,
@@ -38,8 +39,9 @@ function App() {
       try {
         let response = await fetch(`http://localhost:5000/search?query=${Query}`);
         let coins = await response.json();
-        if (response.status === 200) {
+        if (response.status === HttpRequestStatusCode.OK) {
           setCoinsList(coins);
+          setError("");
         }
         else {
           setError(coins);
@@ -56,11 +58,12 @@ function App() {
   return (
     <div className="App">
       <form className="form-search" method="get" action="#">
-        <input type="search" name="search" autoComplete='off' onChange={event => setQuery(event.target.value)} placeholder="search your crypto here ...." />
-        <button type="submit">Search</button>
+        <input type="search" name="search" autoComplete='off' onChange={event => setQuery(event.target.value)} placeholder="search your crypto here ...." data-testid="search-input" />
+        <button type="submit" data-testid="search-button">Search</button>
       </form>
       <List
         className="list-group"
+        data-testid="coins-list"
         sx={{
           marginTop: "-13.5%",
           width: '100%',
@@ -72,7 +75,7 @@ function App() {
           maxHeight: 254,
         }}>
         {
-          (coinsList !== undefined && coinsList.length !== 0)
+          (coinsList !== undefined && error.length === 0 && coinsList.length !== 0)
             ?
             coinsList.filter((data: any) => {
               if (Query === '') {
@@ -108,14 +111,16 @@ function App() {
         }
       </List>
 
-      <Card sx={{
-        maxWidth: 345,
-        marginTop: "25%",
-        width: '100%',
-        height: '100%',
-        maxHeight: 250,
-        position: 'fixed',
-      }}>
+      <Card
+        data-testid="coins-card"
+        sx={{
+          maxWidth: 345,
+          marginTop: "25%",
+          width: '100%',
+          height: '100%',
+          maxHeight: 250,
+          position: 'fixed',
+        }}>
         <CardActionArea>
 
           <img src={coinDetails.imageUrl} alt={coinDetails.name} width="100" height="100" style={{ marginTop: "20px" }} />
@@ -131,8 +136,6 @@ function App() {
         </CardActionArea>
       </Card>
     </div >
-
-
   );
 }
 
