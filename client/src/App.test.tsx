@@ -22,4 +22,3 @@ it('should have the search button disabled when initialized', () => {
   expect(screen.getByTestId('search-button')).toBeEnabled();
 });
 
-

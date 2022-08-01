@@ -59,7 +59,7 @@ function App() {
     <div className="App">
       <form className="form-search" method="get" action="#">
         <input type="search" name="search" autoComplete='off' onChange={event => setQuery(event.target.value)} placeholder="search your crypto here ...." data-testid="search-input" />
-        <button type="submit" data-testid="search-button">Search</button>
+        <button type="submit" data-testid="search-button" onClick={(e) => { e.preventDefault() }}><b>Search</b></button>
       </form>
       <List
         className="list-group"
