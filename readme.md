@@ -35,5 +35,5 @@ http://localhost:3000/
 
 ## Screenshots
 
-![App Screenshot](https://drive.google.com/file/d/1qo6vjbS0HAfXmVZMUNJFS5NwK2kS2KnB/view?usp=sharing)
+![image description](./CryptoPriceTicker.jpg)
 
