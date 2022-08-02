@@ -6,10 +6,6 @@ const app: express.Express = express();
 
 const port = process.env.PORT || 5000;
 
-app.get('/', (_, res: express.Response) => {
-  res.send('Express + TypeScript Server');
-});
-
 app.get('/search', searchCoin);
 
 app.get('/coin-info', getCoinInfo);

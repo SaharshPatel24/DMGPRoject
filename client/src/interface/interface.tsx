@@ -1,8 +1,11 @@
 export enum HttpRequestStatusCode {
     OK = 200,
-    BadRequest = 400,
-    NotFound = 404,
-    InternalServerError = 500,
+}
+
+export interface CoinDetail {
+    name: string;
+    price: string;
+    imageUrl: string;
 }
 
 export interface CoinListItem {
