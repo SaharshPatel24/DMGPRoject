@@ -1,0 +1,20 @@
+{
+  "name": "dmgproject",
+  "version": "1.0.0",
+  "description": "A full-stack web application that queries for crypto currency prices from external services\r and exposes a front-end application.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "docker-compose up --build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SaharshPatel24/DMGPRoject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SaharshPatel24/DMGPRoject/issues"
+  },
+  "homepage": "https://github.com/SaharshPatel24/DMGPRoject#readme"
+}

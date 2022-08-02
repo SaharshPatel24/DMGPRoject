@@ -1,5 +1,5 @@
 import express from "express";
-import { HttpRequestStatusCode } from "../interfaces";
+import { CoinListItem, HttpRequestStatusCode } from "../interfaces";
 
 import * as coinService from "../services/coinService";
 
@@ -7,9 +7,9 @@ const searchCoin = async (req: express.Request, res: express.Response) => {
     let { query } = req.query;
 
     if (!query) {
-        return res.status(HttpRequestStatusCode.BadRequest).send("Missing Query string");
+        return res.status(HttpRequestStatusCode.BadRequest).json("Missing Query string");
     }
-    const coin = await coinService.searchCoin(query as string);
+    const coin: CoinListItem[] = await coinService.searchCoin(query as string);
 
     if (!coin || coin.length === 0) {
         return res.status(HttpRequestStatusCode.NotFound).json("No Coin Found");
@@ -22,7 +22,7 @@ const getCoinInfo = async (req: express.Request, res: express.Response) => {
     let { query } = req.query;
 
     if (!query) {
-        return res.status(HttpRequestStatusCode.BadRequest).send("Missing Query string");
+        return res.status(HttpRequestStatusCode.BadRequest).json("Missing Query string");
     }
 
     const coinInfo = await coinService.getCoinInfo(query as string);
