@@ -67,22 +67,27 @@ function App() {
 
   return (
     < div className="App">
+      {error
+        ?
+        <>{error}</>
+        :
+        <Autocomplete
+          data-testid="search-input"
+          className="form-search"
+          id="clear-on-escape"
+          clearOnEscape
+          options={coinsList}
+          defaultValue={coinsList[10]}
+          getOptionLabel={(option) => option.name}
+          style={{ width: 600, margin: '30px 20px 10px 20px' }}
+          isOptionEqualToValue={(option, value) => option.name === value.name}
+          onChange={(e, value) => handleOnClick(e, value?.id)}
+          renderInput={(params) => (
+            <TextField {...params} label="Search your coins..." onChange={(e) => setQuery(e.target.value)} variant="standard" />
+          )}
+        />
+      }
 
-      <Autocomplete
-        data-testid="search-input"
-        className="form-search"
-        id="clear-on-escape"
-        clearOnEscape
-        options={coinsList}
-        defaultValue={coinsList[10]}
-        getOptionLabel={(option) => option.name}
-        style={{ width: 600, margin: '30px 20px 10px 20px' }}
-        isOptionEqualToValue={(option, value) => option.name === value.name}
-        onChange={(e, value) => handleOnClick(e, value?.id)}
-        renderInput={(params) => (
-          <TextField {...params} label="Search your coins..." onChange={(e) => setQuery(e.target.value)} variant="standard" />
-        )}
-      />
 
       < Card
         data-testid="coins-card"
