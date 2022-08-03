@@ -1,10 +1,13 @@
 import express from 'express';
+import cors from 'cors';
 
 import { searchCoin, getCoinInfo } from './controller/coinController';
 
 const app: express.Express = express();
 
 const port = process.env.PORT || 5000;
+
+app.use(cors());
 
 app.get('/search', searchCoin);
 

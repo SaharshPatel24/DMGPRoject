@@ -21,3 +21,5 @@ services:
     build:
       context: client
       dockerfile: Dockerfile
+      args:
+        - URI=http://localhost:5000
